@@ -89,7 +89,7 @@ object BIOSyntax {
     @inline def tap[E1 >: E, B](f0: A => F[E1, Unit]): F[E1, A] = F.flatMap[E, A, E1, A](r)(a => F.map(f0(a))(_ => a))
   }
 
-  final class BIOErrorOps[F[+_, +_], E, A](private val r: F[E, A])(implicit private val F: BIOError[F]) {
+  final class BIOErrorOps[F[+_, +_], +E, A](private val r: F[E, A])(implicit private val F: BIOError[F]) {
 
     @inline def flip: F[A, E] = F.flip(r)
 

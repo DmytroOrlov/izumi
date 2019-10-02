@@ -4795,6 +4795,9 @@ lazy val `sbt-plugins-jvm` = (project in file(".agg/sbt-plugins-sbt-plugins-jvm"
   )
 
 lazy val `izumi` = (project in file("."))
+  .settings(inThisBuild(
+    publishTo := Some("releases" at "https://nexus.com/nexus/content/repositories/releases"),
+  ))
   .settings(
     skip in publish := true,
     publishMavenStyle in ThisBuild := true,
@@ -4829,13 +4832,6 @@ lazy val `izumi` = (project in file("."))
     organization in ThisBuild := "io.7mind.izumi",
     sonatypeProfileName := "io.7mind",
     sonatypeSessionName := s"[sbt-sonatype] ${name.value} ${version.value} ${java.util.UUID.randomUUID}",
-    publishTo in ThisBuild := 
-    (if (!isSnapshot.value) {
-        sonatypePublishToBundle.value
-      } else {
-        Some(Opts.resolver.sonatypeSnapshots)
-    })
-    ,
     credentials in ThisBuild += Credentials(file(".secrets/credentials.sonatype-nexus.properties")),
     homepage in ThisBuild := Some(url("https://izumi.7mind.io")),
     licenses in ThisBuild := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php")),
